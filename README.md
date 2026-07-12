@@ -4,34 +4,57 @@
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
 [![W3C validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F)](https://validator.w3.org/nu/?doc=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F)
 
-Compact Theme is a portable static website theme built around IBM Plex Sans and IBM Plex Mono. It includes light and dark palettes, compact editorial layouts, responsive navigation, readable code blocks, and automatic copy buttons.
+Compact Theme is a portable HTML, CSS, and JavaScript theme built with IBM Plex Sans and IBM Plex Mono. It includes light and dark palettes, compact layouts, responsive navigation, and readable code blocks. Consumer sites need no framework, package install, or build step.
 
-It uses plain CSS and JavaScript. There is no build step or package dependency.
+## Quick links
+
+- [Live showcase](https://lilabrooks.github.io/compact-theme/)
+- [Latest release](https://github.com/lilabrooks/compact-theme/releases/latest)
+- [Download v1.0.0 ZIP](https://github.com/lilabrooks/compact-theme/releases/download/v1.0.0/compact-theme-v1.0.0.zip)
+- [W3C validation](https://validator.w3.org/nu/?doc=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F)
+
+## Contents
+
+- [Distribution](#distribution)
+- [Files](#files)
+- [Install](#install)
+- [Theme behavior](#theme-behavior)
+- [Code blocks](#code-blocks)
+- [Layout and palette](#layout-and-palette)
+- [Showcase](#showcase)
+- [Tests and compatibility](#tests-and-compatibility)
+- [Publishing](#publishing)
+- [Licence and attribution](#licence-and-attribution)
+
+## Distribution
+
+Download the clean consumer bundle from the [latest GitHub release](https://github.com/lilabrooks/compact-theme/releases/latest). The current file is [`compact-theme-v1.0.0.zip`](https://github.com/lilabrooks/compact-theme/releases/download/v1.0.0/compact-theme-v1.0.0.zip).
+
+The ZIP contains 11 public theme, documentation, font, and licence files. Tests, screenshots, package metadata, dependencies, and workflows appear only in GitHub's source archives. Future releases attach a new ZIP and SHA-256 checksum.
 
 ## Files
 
-- `compact-theme.css`: colours, typography, layout components, responsive rules, and code styling
-- `compact-theme.js`: theme switching, preference storage, language labels, and code-copy controls
-- `index.html`: complete starter page and GitHub Pages entry point
-- `LICENSE`: the BSD 2-Clause software licence
-- `COPYRIGHT.txt`: the attribution and copyright notice to retain
-- `.nojekyll`: bypasses Jekyll processing on GitHub Pages
-- `fonts/`: the bundled IBM Plex font files and their licence
+- `compact-theme.css`: colours, typography, components, responsive rules, and code styling
+- `compact-theme.js`: theme preferences, language labels, and code-copy controls
+- `index.html`: complete component reference and GitHub Pages entry point
+- `fonts/`: bundled IBM Plex files and their SIL Open Font License
+- `LICENSE` and `COPYRIGHT.txt`: BSD 2-Clause terms and attribution
+- `.nojekyll`: prevents Jekyll processing when the repository is served directly
 
-## Add it to a site
+## Install
 
-Copy this folder into the site, then include the stylesheet and script:
+Copy the distribution into your site, keep `fonts/` beside the stylesheet, and load the assets:
 
 ```html
 <link rel="stylesheet" href="/theme/compact-theme.css">
 <script src="/theme/compact-theme.js" defer></script>
 ```
 
-Relative paths work too. Keep the `fonts` directory beside the stylesheet.
+Relative paths work for GitHub project Pages and nested sites. Use `index.html` as the semantic starting point.
 
-## Theme switching
+## Theme behavior
 
-The theme follows the visitor's system preference until they choose a mode. Add this button anywhere in the page:
+The first visit follows the system colour preference. Add the persistent control anywhere in the page:
 
 ```html
 <button class="compact-theme-toggle" type="button" data-theme-toggle hidden>
@@ -39,62 +62,39 @@ The theme follows the visitor's system preference until they choose a mode. Add 
 </button>
 ```
 
-The script reveals the button, switches between light and dark mode, and remembers the selection in `localStorage`.
-
-To force a mode without JavaScript, set `data-theme` on the root element:
-
-```html
-<html lang="en" data-theme="dark">
-```
-
-Use `light` for the light palette. Remove the attribute to return to the system preference.
-
-For multiple themes on the same domain, give this theme its own storage key:
-
-```html
-<html lang="en" data-theme-storage-key="my-site-theme">
-```
+The script reveals the button and stores the choice in `localStorage`. Without JavaScript, the button stays hidden and the system palette still applies. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a mode. Use `data-theme-storage-key="my-site-theme"` when several themes share one domain.
 
 ## Code blocks
 
-Use semantic code markup. The script adds the toolbar and copy control:
+Semantic code markup receives a label and copy button:
 
 ```html
 <pre><code class="language-shell">npm install
-npm run build</code></pre>
+npm test</code></pre>
 ```
 
-Supported language labels include Shell, JavaScript, TypeScript, HTML, CSS, JSON, Markdown, Python, and YAML. Set a custom label on either the `pre` or `code` element:
+Labels cover Shell, JavaScript, TypeScript, HTML, CSS, JSON, Markdown, Python, and YAML. Override a label or leave a block untouched:
 
 ```html
 <pre data-code-label="Configuration"><code>theme: compact</code></pre>
+<pre data-no-copy><code>This block receives no toolbar.</code></pre>
 ```
 
-Add `data-no-copy` to the `pre` or `code` element to leave a block unmodified.
+## Layout and palette
 
-Short references use ordinary inline code:
-
-```html
-<p>Edit <code>config.yml</code> before publishing.</p>
-```
-
-## Layout classes
-
-The example page demonstrates the main layout classes:
+The main layout classes are:
 
 - `compact-shell`: centred content width
-- `compact-header`, `compact-brand`, `compact-nav`: site header
+- `compact-header`, `compact-brand`, `compact-nav`: header and navigation
 - `compact-hero`, `compact-title`, `compact-lede`: opening section
-- `compact-section`, `compact-section-head`, `compact-section-title`: compact content sections
+- `compact-section`, `compact-section-head`, `compact-section-title`: content sections
 - `compact-grid`, `compact-card`, `compact-card-title`: bordered card grid
-- `compact-button`, `compact-button-primary`: links and actions
-- `compact-footer`: compact footer
+- `compact-button`, `compact-button-primary`: actions
+- `compact-footer`: footer
 
-The base stylesheet also styles body text, links, focus states, inline code, and unenhanced `pre` elements.
+Base styles cover text, links, focus states, inline code, responsive media, and unenhanced `pre` elements. The shell grows from 1180px to 1360px on wide screens.
 
-## Change the palette
-
-Override the CSS variables after loading the theme:
+Override variables after the theme stylesheet:
 
 ```css
 :root {
@@ -107,65 +107,57 @@ Override the CSS variables after loading the theme:
 }
 ```
 
-Dark and light mode keep separate background, text, muted-text, divider, panel, and accent values. Code blocks intentionally keep a dark surface in both modes so scripts stay visually distinct.
+## Showcase
 
-The default content shell grows from 1180px to 1360px on wide screens. Override `--compact-content-width` after loading the theme to use a fixed maximum width.
+The [GitHub Pages site](https://lilabrooks.github.io/compact-theme/) is the live reference for components, theme behavior, responsive layouts, accessibility utilities, and code treatment.
 
-## Preview
+For local review, serve this directory with any static file server and open `index.html`.
 
-Open the [live GitHub Pages showcase](https://lilabrooks.github.io/compact-theme/) to review the complete component and behavior reference.
+## Tests and compatibility
 
-For local review, serve this directory with any static file server and open the site root or `index.html`.
+| Area | Coverage |
+| --- | --- |
+| Browsers and CI | Chromium, Firefox, and WebKit from Playwright 1.61.1; pinned Noble Linux container |
+| Functional behavior | Local assets, fonts, theme persistence, labels, copy controls, fragments, and semantic landmarks |
+| Layout and visuals | Responsive checks from 320 to 3440px; light and dark Chromium baselines on macOS and Linux |
+| Accessibility | Axe in Chromium, Firefox, and WebKit; keyboard focus and semantic checks |
+| JavaScript fallback | Content, system palette, and raw code checked with JavaScript disabled in all 3 engines |
+| HTML | Live page checked by the W3C Nu validator |
+| Packaging | Exact 11-file allowlist with development-file leak and symlink checks |
+| Tool consistency | Playwright package, CI image, and Linux snapshot image must use the same exact version |
 
-## Tests
-
-The published theme has no runtime dependencies. Development tests use Playwright and Axe to check Chromium, Firefox, and WebKit behavior, responsive layouts, theme persistence, code copying, local assets, accessibility rules, and visual baselines.
-
-Install the development dependencies and browser binaries once:
+Install the development tools once, then run the complete suite:
 
 ```shell
 npm install
 npx playwright install chromium firefox webkit
-```
-
-Run the complete suite:
-
-```shell
 npm test
 ```
 
-After an intentional visual change, review the rendered pages and update the Chromium baselines:
+After an intentional visual change, review the page and update both baseline sets:
 
 ```shell
 npm run test:update-snapshots
 npm run test:update-snapshots:linux
 ```
 
-The Linux update command requires Docker. GitHub Actions runs the same suite for every push and pull request in a pinned Playwright Linux image. Visual baselines are stored separately for macOS and Linux so font-rendering differences do not create false failures.
+The Linux command requires Docker.
 
-## GitHub Pages deployment
+## Publishing
 
-Pushes to `main` run the complete test suite, build an allowlisted `_site` artifact, and deploy it through GitHub Pages after the tests pass. Pull requests run tests without deploying.
+Pushes to `main` test, build, and deploy the allowlisted `_site` artifact. Pull requests test without deploying. Set **GitHub Actions** as the Pages publishing source.
 
-The public artifact contains only the theme page, stylesheet, script, documentation, licences, and bundled fonts. Development dependencies, tests, screenshots, package metadata, and workflow files remain outside the deployed site.
-
-In the repository's Pages settings, select **GitHub Actions** as the publishing source.
-
-## Releases
-
-Semantic-version tags in the form `vMAJOR.MINOR.PATCH` trigger the release workflow. It runs the complete test suite, builds the allowlisted public distribution, creates a ZIP archive and SHA-256 checksum, and publishes both files to the matching GitHub release.
-
-The workflow can also be run manually for an existing semantic-version tag. Re-running it replaces the generated ZIP and checksum without changing the tagged source.
+Tags matching `vMAJOR.MINOR.PATCH` test and publish a clean ZIP with its SHA-256 checksum. The release workflow can also rebuild an existing tag manually.
 
 ## Licence and attribution
 
-Compact Theme code, documentation, and example page are licensed under the BSD 2-Clause License. You may use, modify, and redistribute them, including commercially, provided redistributed copies retain the copyright notice, licence conditions, and disclaimer in `LICENSE`.
+The code, documentation, and example page use the BSD 2-Clause License. Redistribution must retain the copyright notice, conditions, and disclaimer in `LICENSE`.
 
-Use this attribution notice when referencing the theme:
+Use this notice when referencing the theme:
 
 ```text
 Compact Theme — Copyright (c) 2026 Lila Brooks
 Licensed under the BSD 2-Clause License.
 ```
 
-The bundled IBM Plex font files retain IBM's copyright and are distributed under the SIL Open Font License in `fonts/LICENSE.txt`.
+The bundled IBM Plex files retain IBM's copyright and use the SIL Open Font License in `fonts/LICENSE.txt`.
