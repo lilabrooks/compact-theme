@@ -21,6 +21,7 @@ assert(statSync(resolve(root, ".nojekyll")).size === 0, ".nojekyll must remain e
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const css = readFileSync(resolve(root, "compact-theme.css"), "utf8");
 const javascript = readFileSync(resolve(root, "compact-theme.js"), "utf8");
+const readme = readFileSync(resolve(root, "README.md"), "utf8");
 const license = readFileSync(resolve(root, "LICENSE"), "utf8");
 const fontLicense = readFileSync(resolve(root, "fonts/LICENSE.txt"), "utf8");
 const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
@@ -34,6 +35,9 @@ assert(/<meta\s+name="viewport"/i.test(html), "index.html must include a viewpor
 assert(/<script\s+src="\.\/compact-theme\.js"\s+defer><\/script>/i.test(html), "Theme script must load with defer");
 assert((html.match(/<h1\b/gi) || []).length === 1, "index.html must contain exactly one h1");
 assert((html.match(/<main\b/gi) || []).length === 1, "index.html must contain exactly one main landmark");
+for (const section of ["overview", "typography", "components", "code", "behavior", "install"]) {
+  assert(html.includes(`id="${section}"`), `Showcase section is missing: #${section}`);
+}
 
 const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
 assert(new Set(ids).size === ids.length, "index.html contains duplicate ids");
@@ -60,6 +64,7 @@ for (const variable of usedVariables) {
 }
 
 assert(javascript.includes('"use strict"'), "Theme JavaScript must use strict mode");
+assert(readme.includes("img.shields.io/w3c-validation/"), "README must include the live W3C validation badge");
 assert(license.includes("BSD 2-Clause License"), "Software licence identifier is missing");
 assert(license.includes("Copyright (c) 2026 Lila Brooks"), "Software copyright notice is missing");
 assert(fontLicense.includes("SIL OPEN FONT LICENSE Version 1.1"), "IBM font licence is missing");
