@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A portable example of Compact Theme.">
+  <meta name="author" content="Lila Brooks">
+  <title>Compact Theme</title>
+  <link rel="license" href="./LICENSE">
+  <link rel="stylesheet" href="./compact-theme.css">
+  <script src="./compact-theme.js" defer></script>
+</head>
+<body>
+  <a class="compact-skip-link" href="#content">Skip to content</a>
+
+  <header class="compact-header compact-shell">
+    <a class="compact-brand" href="./" aria-label="Compact Theme, home">
+      <span class="compact-brand-mark">PC</span>
+      <span>Compact Theme</span>
+    </a>
+    <div class="compact-header-actions">
+      <nav class="compact-nav" aria-label="Primary navigation">
+        <a href="#overview" aria-current="page">Overview</a>
+        <a href="#components">Components</a>
+        <a href="#code">Code</a>
+        <a href="#install">Install</a>
+      </nav>
+      <button class="compact-theme-toggle" type="button" data-theme-toggle hidden>Theme</button>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="compact-hero compact-shell" id="overview">
+      <div>
+        <p class="compact-eyebrow">Static HTML · CSS · JavaScript</p>
+        <h1 class="compact-title">A compact theme for <em>clear technical writing.</em></h1>
+      </div>
+      <p class="compact-lede">Compact Theme uses IBM Plex, restrained type sizes, tight section spacing, automatic light and dark palettes, and readable code blocks.</p>
+    </div>
+
+    <section class="compact-section" id="components">
+      <div class="compact-shell">
+        <div class="compact-section-head">
+          <p class="compact-eyebrow">Core components</p>
+          <div>
+            <h2 class="compact-section-title">A small set of classes covers most editorial sites.</h2>
+            <p class="compact-section-copy">Use the layout classes as shown here, or keep only the colour variables and base typography. The theme has no framework dependency.</p>
+          </div>
+        </div>
+        <div class="compact-grid">
+          <article class="compact-card">
+            <span class="compact-tag">Readable</span>
+            <h3 class="compact-card-title">Comfortable type</h3>
+            <p>Body copy stays near 17px. Headings remain compact and line lengths stay manageable.</p>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Responsive</span>
+            <h3 class="compact-card-title">Useful at narrow widths</h3>
+            <p>Sections collapse cleanly, navigation stays legible, and code scrolls without shrinking.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="compact-section" id="code">
+      <div class="compact-shell">
+        <div class="compact-section-head">
+          <p class="compact-eyebrow">Code treatment</p>
+          <div>
+            <h2 class="compact-section-title">Scripts render clearly and copy cleanly.</h2>
+            <p class="compact-section-copy">Every <code>pre &gt; code</code> block receives a language label and copy button. Add a standard language class to set the label.</p>
+          </div>
+        </div>
+        <pre><code class="language-html">&lt;link rel="stylesheet" href="/assets/compact-theme.css"&gt;
+&lt;script src="/assets/compact-theme.js" defer&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="compact-section" id="install">
+      <div class="compact-shell">
+        <div class="compact-section-head">
+          <p class="compact-eyebrow">Start using it</p>
+          <div>
+            <h2 class="compact-section-title">Copy the folder into any static site.</h2>
+            <p class="compact-section-copy">The stylesheet includes both themes and local IBM font files. The script adds theme switching and code-copy controls.</p>
+            <div class="compact-actions">
+              <a class="compact-button compact-button-primary" href="./README.md">Read the guide</a>
+              <a class="compact-button" href="#overview">Back to top</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="compact-footer compact-shell">
+    <span>Compact Theme</span>
+    <span>Copyright © 2026 Lila Brooks · <a rel="license" href="./LICENSE">BSD-2-Clause</a> · <a rel="external" href="https://opensource.org/license/bsd-2-clause">OSI reference</a></span>
+  </footer>
+</body>
+</html>

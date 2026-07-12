@@ -1,0 +1,18 @@
+{
+  "name": "compact-theme",
+  "private": true,
+  "description": "Development tests for the Compact Theme static site.",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "build:pages": "node tests/build-pages.mjs",
+    "test": "npm run test:static && npm run test:pages && npm run test:browser",
+    "test:static": "node --check compact-theme.js && node tests/static-checks.mjs",
+    "test:pages": "npm run build:pages && node tests/pages-checks.mjs",
+    "test:browser": "playwright test",
+    "test:update-snapshots": "playwright test --project=chromium --grep @visual --update-snapshots",
+    "test:update-snapshots:linux": "sh tests/update-linux-snapshots.sh"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}
