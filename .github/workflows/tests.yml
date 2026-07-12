@@ -24,6 +24,9 @@ jobs:
         run: npm ci
 
       - name: Run tests
+        env:
+          # Firefox refuses to launch as root when HOME belongs to another user.
+          HOME: /root
         run: npm test
 
       - name: Upload Playwright report
