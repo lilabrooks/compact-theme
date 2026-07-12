@@ -1,5 +1,8 @@
 # Compact Theme
 
+[![Tests](https://github.com/lilabrooks/compact-theme/actions/workflows/tests.yml/badge.svg)](https://github.com/lilabrooks/compact-theme/actions/workflows/tests.yml)
+[![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
+
 Compact Theme is a portable static website theme built around IBM Plex Sans and IBM Plex Mono. It includes light and dark palettes, compact editorial layouts, responsive navigation, readable code blocks, and automatic copy buttons.
 
 It uses plain CSS and JavaScript. There is no build step or package dependency.
