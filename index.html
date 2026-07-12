@@ -3,19 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A portable example of Compact Theme.">
+  <meta name="description" content="A live showcase and component reference for Compact Theme.">
   <meta name="author" content="Lila Brooks">
-  <title>Compact Theme</title>
+  <title>Compact Theme showcase</title>
   <link rel="license" href="./LICENSE">
   <link rel="stylesheet" href="./compact-theme.css">
   <script src="./compact-theme.js" defer></script>
+  <style>
+    .showcase-stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    .showcase-card-list {
+      margin: 20px 0 0;
+      padding-left: 1.25rem;
+      color: var(--compact-muted);
+    }
+
+    .showcase-card-list li + li {
+      margin-top: 8px;
+    }
+
+    .showcase-code .compact-code-frame,
+    .showcase-code pre,
+    .showcase-media {
+      margin-top: 24px;
+    }
+
+    .showcase-media {
+      overflow: hidden;
+      border: 1px solid var(--compact-rule);
+      border-radius: 4px;
+      background: var(--compact-bg);
+    }
+
+    .showcase-media svg {
+      width: 100%;
+      min-height: 180px;
+    }
+
+    .showcase-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin: 20px 0 0;
+      color: var(--compact-muted);
+      font-family: var(--compact-mono);
+      font-size: 0.78rem;
+    }
+  </style>
 </head>
 <body>
   <a class="compact-skip-link" href="#content">Skip to content</a>
 
   <header class="compact-header compact-shell">
     <a class="compact-brand" href="./" aria-label="Compact Theme, home">
-      <span class="compact-brand-mark">PC</span>
+      <span class="compact-brand-mark">CT</span>
       <span>Compact Theme</span>
     </a>
     <div class="compact-header-actions">
@@ -32,70 +76,202 @@
   <main id="content">
     <div class="compact-hero compact-shell" id="overview">
       <div>
-        <p class="compact-eyebrow">Static HTML · CSS · JavaScript</p>
-        <h1 class="compact-title">A compact theme for <em>clear technical writing.</em></h1>
+        <p class="compact-eyebrow">Live component reference</p>
+        <h1 class="compact-title">Compact Theme, <em>fully assembled.</em></h1>
+        <div class="compact-actions">
+          <a class="compact-button compact-button-primary" href="https://github.com/lilabrooks/compact-theme/releases/latest">Download release</a>
+          <a class="compact-button" href="https://github.com/lilabrooks/compact-theme">View source</a>
+        </div>
       </div>
-      <p class="compact-lede">Compact Theme uses IBM Plex, restrained type sizes, tight section spacing, automatic light and dark palettes, and readable code blocks.</p>
+      <div>
+        <p class="compact-lede">This page uses the published stylesheet and script to demonstrate typography, layout, navigation, cards, controls, code treatment, theme behavior, responsive media, and accessibility utilities.</p>
+        <p class="showcase-meta"><span>Plain HTML</span><span>IBM Plex</span><span>Light + dark</span><span>No runtime dependency</span></p>
+      </div>
     </div>
 
-    <section class="compact-section" id="components">
+    <section class="compact-section" id="typography">
       <div class="compact-shell">
         <div class="compact-section-head">
-          <p class="compact-eyebrow">Core components</p>
+          <p class="compact-eyebrow">Typography</p>
           <div>
-            <h2 class="compact-section-title">A small set of classes covers most editorial sites.</h2>
-            <p class="compact-section-copy">Use the layout classes as shown here, or keep only the colour variables and base typography. The theme has no framework dependency.</p>
+            <h2 class="compact-section-title">Editorial text with a technical voice.</h2>
+            <p class="compact-section-copy">IBM Plex Sans carries body copy. IBM Plex Mono handles headings, labels, navigation, controls, and code. Inline <code>references</code> remain distinct without interrupting a paragraph.</p>
           </div>
         </div>
         <div class="compact-grid">
           <article class="compact-card">
-            <span class="compact-tag">Readable</span>
-            <h3 class="compact-card-title">Comfortable type</h3>
-            <p>Body copy stays near 17px. Headings remain compact and line lengths stay manageable.</p>
+            <span class="compact-tag">Hierarchy</span>
+            <h3 class="compact-card-title">Compact headings</h3>
+            <p>Heading sizes stay restrained, line lengths remain readable, and the content shell stops growing on very wide displays.</p>
+            <ul class="showcase-card-list">
+              <li>One clear page title</li>
+              <li>Section-level headings</li>
+              <li>Card-level headings</li>
+            </ul>
           </article>
           <article class="compact-card">
-            <span class="compact-tag">Responsive</span>
-            <h3 class="compact-card-title">Useful at narrow widths</h3>
-            <p>Sections collapse cleanly, navigation stays legible, and code scrolls without shrinking.</p>
+            <span class="compact-tag">Base elements</span>
+            <h3 class="compact-card-title">Links and inline code</h3>
+            <p>Ordinary <a href="https://github.com/lilabrooks/compact-theme">text links</a> use a restrained hover treatment. Short commands such as <code>npm test</code> use the mono face and semantic theme colours.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="compact-section" id="code">
+    <section class="compact-section" id="components">
+      <div class="compact-shell">
+        <div class="compact-section-head">
+          <p class="compact-eyebrow">Components</p>
+          <div>
+            <h2 class="compact-section-title">A small vocabulary covers most static sites.</h2>
+            <p class="compact-section-copy">The header, navigation, hero, sections, cards, tags, actions, buttons, code frames, and footer share the same spacing and colour variables.</p>
+          </div>
+        </div>
+        <div class="compact-grid">
+          <article class="compact-card">
+            <span class="compact-tag">Cards</span>
+            <h3 class="compact-card-title">Responsive grid</h3>
+            <p>Cards appear in 2 columns when space permits and collapse to 1 column at the mobile breakpoint.</p>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Actions</span>
+            <h3 class="compact-card-title">Primary and secondary</h3>
+            <p>Buttons remain ordinary links or buttons with visible keyboard focus and a minimum touch-friendly height.</p>
+            <div class="compact-actions">
+              <a class="compact-button compact-button-primary" href="#install">Primary action</a>
+              <a class="compact-button" href="#behavior">Secondary action</a>
+            </div>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Utilities</span>
+            <h3 class="compact-card-title">Accessible helpers</h3>
+            <p>The skip link appears when focused. The screen-reader-only utility adds useful context without changing the visual layout.</p>
+            <div class="compact-actions">
+              <a class="compact-button" href="#install"><span aria-hidden="true">↓</span>&nbsp; Install<span class="compact-sr-only"> section</span></a>
+            </div>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Media</span>
+            <h3 class="compact-card-title">Responsive by default</h3>
+            <p>Images, SVG illustrations, and video stay inside their containers without extra utility classes.</p>
+            <figure class="showcase-media">
+              <svg viewBox="0 0 640 240" role="img" aria-labelledby="media-title media-desc">
+                <title id="media-title">Responsive Compact Theme media sample</title>
+                <desc id="media-desc">A geometric diagram made from a wide outlined frame, 2 connected panels, and a circular accent.</desc>
+                <rect x="24" y="24" width="592" height="192" rx="8" fill="var(--compact-panel)" stroke="var(--compact-rule)" stroke-width="2"/>
+                <rect x="62" y="66" width="208" height="108" rx="4" fill="var(--compact-bg)" stroke="var(--compact-text)" stroke-width="2"/>
+                <rect x="370" y="66" width="208" height="108" rx="4" fill="var(--compact-accent-soft)" stroke="var(--compact-accent)" stroke-width="2"/>
+                <path d="M270 120H370" stroke="var(--compact-muted)" stroke-width="3"/>
+                <circle cx="320" cy="120" r="17" fill="var(--compact-accent)"/>
+              </svg>
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="compact-section showcase-code" id="code">
       <div class="compact-shell">
         <div class="compact-section-head">
           <p class="compact-eyebrow">Code treatment</p>
           <div>
-            <h2 class="compact-section-title">Scripts render clearly and copy cleanly.</h2>
-            <p class="compact-section-copy">Every <code>pre &gt; code</code> block receives a language label and copy button. Add a standard language class to set the label.</p>
+            <h2 class="compact-section-title">Semantic code blocks label and copy themselves.</h2>
+            <p class="compact-section-copy">Standard language classes produce readable labels. A custom label can replace the detected language, and <code>data-no-copy</code> leaves a block untouched.</p>
           </div>
         </div>
-        <pre><code class="language-html">&lt;link rel="stylesheet" href="/assets/compact-theme.css"&gt;
-&lt;script src="/assets/compact-theme.js" defer&gt;&lt;/script&gt;</code></pre>
+        <div class="compact-grid">
+          <article class="compact-card">
+            <span class="compact-tag">Detected label</span>
+            <h3 class="compact-card-title">HTML</h3>
+            <p>The script recognizes common language classes and adds a copy control.</p>
+            <pre><code class="language-html">&lt;link rel="stylesheet" href="./compact-theme.css"&gt;
+&lt;script src="./compact-theme.js" defer&gt;&lt;/script&gt;</code></pre>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Detected label</span>
+            <h3 class="compact-card-title">Shell</h3>
+            <p>Long commands scroll inside the frame instead of widening the page.</p>
+            <pre><code class="language-shell">npm install
+npm test
+npm run test:update-snapshots</code></pre>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Custom label</span>
+            <h3 class="compact-card-title">Token palette</h3>
+            <p>Token classes support syntax highlighters while the theme stays independent of any highlighter.</p>
+            <pre data-code-label="Theme tokens"><code><span class="token comment">/* Compact Theme */</span>
+<span class="token selector">.compact-card</span> <span class="token punctuation">{</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> <span class="token variable">var</span><span class="token punctuation">(</span><span class="token string">--compact-text</span><span class="token punctuation">);</span>
+<span class="token punctuation">}</span></code></pre>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Opt out</span>
+            <h3 class="compact-card-title">Unmodified block</h3>
+            <p>This block uses the base code style and deliberately receives no toolbar or copy button.</p>
+            <pre data-no-copy><code>data-no-copy keeps this block unchanged.</code></pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="compact-section" id="behavior">
+      <div class="compact-shell">
+        <div class="compact-section-head">
+          <p class="compact-eyebrow">Behavior</p>
+          <div>
+            <h2 class="compact-section-title">Progressive behavior with durable fallbacks.</h2>
+            <p class="compact-section-copy">The stylesheet works alone. JavaScript adds preference persistence, theme controls, language labels, and copy actions.</p>
+          </div>
+        </div>
+        <div class="compact-grid">
+          <article class="compact-card">
+            <span class="compact-tag">System preference</span>
+            <h3 class="compact-card-title">Automatic first visit</h3>
+            <p>The initial palette follows <code>prefers-color-scheme</code>. The control in the header shows the mode available next.</p>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Persistence</span>
+            <h3 class="compact-card-title">Remembered choice</h3>
+            <p>A visitor’s light or dark selection is stored locally and restored on the next page load.</p>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">Reduced motion</span>
+            <h3 class="compact-card-title">Respectful transitions</h3>
+            <p>The reduced-motion media query disables smooth scrolling and theme interaction transitions.</p>
+          </article>
+          <article class="compact-card">
+            <span class="compact-tag">No JavaScript</span>
+            <h3 class="compact-card-title">Readable fallback</h3>
+            <p>The theme toggle stays hidden, code remains styled, semantic markup stays intact, and the system palette still applies.</p>
+            <noscript><p>JavaScript is disabled. This is the live no-script fallback.</p></noscript>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="compact-section" id="install">
       <div class="compact-shell">
         <div class="compact-section-head">
-          <p class="compact-eyebrow">Start using it</p>
+          <p class="compact-eyebrow">Install</p>
           <div>
-            <h2 class="compact-section-title">Copy the folder into any static site.</h2>
-            <p class="compact-section-copy">The stylesheet includes both themes and local IBM font files. The script adds theme switching and code-copy controls.</p>
+            <h2 class="compact-section-title">Copy the assets into any static site.</h2>
+            <p class="compact-section-copy">Keep the bundled <code>fonts</code> directory beside the stylesheet, load the script with <code>defer</code>, and retain the software and font licences when redistributing the theme.</p>
             <div class="compact-actions">
-              <a class="compact-button compact-button-primary" href="./README.md">Read the guide</a>
-              <a class="compact-button" href="#overview">Back to top</a>
+              <a class="compact-button compact-button-primary" href="https://github.com/lilabrooks/compact-theme/releases/latest">Download latest release</a>
+              <a class="compact-button" href="./README.md">Read the guide</a>
+              <a class="compact-button" href="https://validator.w3.org/nu/?doc=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F">Validate this page</a>
             </div>
           </div>
         </div>
+        <pre data-code-label="Page head"><code class="language-html">&lt;link rel="stylesheet" href="./compact-theme.css"&gt;
+&lt;script src="./compact-theme.js" defer&gt;&lt;/script&gt;</code></pre>
       </div>
     </section>
   </main>
 
   <footer class="compact-footer compact-shell">
-    <span>Compact Theme</span>
-    <span>Copyright © 2026 Lila Brooks · <a rel="license" href="./LICENSE">BSD-2-Clause</a> · <a rel="external" href="https://opensource.org/license/bsd-2-clause">OSI reference</a></span>
+    <span>Compact Theme showcase</span>
+    <span>Copyright © 2026 Lila Brooks · <a rel="license" href="./LICENSE">BSD-2-Clause</a> · <a href="https://github.com/lilabrooks/compact-theme/releases/latest">Latest release</a></span>
   </footer>
 </body>
 </html>

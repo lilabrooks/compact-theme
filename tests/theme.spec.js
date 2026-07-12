@@ -30,11 +30,11 @@ test("loads local assets and enhances the page", async ({ page }) => {
   expect(response?.ok()).toBeTruthy();
   await page.evaluate(() => document.fonts.ready);
 
-  await expect(page).toHaveTitle("Compact Theme");
+  await expect(page).toHaveTitle("Compact Theme showcase");
   await expect(page.locator("html")).toHaveClass(/compact-theme-ready/);
-  await expect(page.locator(".compact-code-frame")).toHaveCount(1);
-  await expect(page.locator(".compact-code-label")).toHaveText("HTML");
-  await expect(page.getByRole("button", { name: "Copy HTML code" })).toBeVisible();
+  await expect(page.locator(".compact-code-frame")).toHaveCount(4);
+  await expect(page.locator(".compact-code-label")).toHaveText(["HTML", "Shell", "Theme tokens", "Page head"]);
+  await expect(page.locator("#code").getByRole("button", { name: "Copy HTML code" })).toBeVisible();
 
   const fontsLoaded = await page.evaluate(() => ({
     mono: document.fonts.check('14px "IBM Plex Mono"'),
@@ -42,6 +42,18 @@ test("loads local assets and enhances the page", async ({ page }) => {
   }));
   expect(fontsLoaded).toEqual({ mono: true, sans: true });
   expect(browserProblems).toEqual([]);
+});
+
+test("showcases the published components and utilities", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.locator(".compact-card")).toHaveCount(14);
+  await expect(page.getByRole("img", { name: "Responsive Compact Theme media sample" })).toBeVisible();
+  await expect(page.locator("pre[data-no-copy]")).toBeVisible();
+  await expect(page.locator("pre[data-no-copy]").locator("xpath=..")).not.toHaveClass(/compact-code-frame/);
+  await expect(page.locator(".compact-sr-only")).toHaveText("section");
+  await expect(page.getByRole("link", { name: "Download latest release" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Validate this page" })).toBeVisible();
 });
 
 test("uses semantic landmarks and valid fragment targets", async ({ page }) => {
@@ -93,11 +105,25 @@ test("copies code in Chromium", async ({ browserName, context, page }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: "http://127.0.0.1:4173" });
   await page.goto("/");
 
-  await page.getByRole("button", { name: "Copy HTML code" }).click();
-  await expect(page.getByRole("button", { name: "HTML code copied" })).toHaveText("Copied");
+  const codeSection = page.locator("#code");
+  await codeSection.getByRole("button", { name: "Copy HTML code" }).click();
+  await expect(codeSection.getByRole("button", { name: "HTML code copied" })).toHaveText("Copied");
 
   const clipboard = await page.evaluate(() => navigator.clipboard.readText());
-  expect(clipboard).toBe('<link rel="stylesheet" href="/assets/compact-theme.css">\n<script src="/assets/compact-theme.js" defer></script>');
+  expect(clipboard).toBe('<link rel="stylesheet" href="./compact-theme.css">\n<script src="./compact-theme.js" defer></script>');
+});
+
+test("keeps the page readable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.locator("[data-theme-toggle]")).toBeHidden();
+  await expect(page.locator(".compact-code-frame")).toHaveCount(0);
+  await expect(page.locator("pre").first()).toBeVisible();
+
+  await context.close();
 });
 
 test("keeps responsive layouts within the viewport", async ({ page }) => {

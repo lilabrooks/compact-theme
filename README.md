@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/lilabrooks/compact-theme/actions/workflows/tests.yml/badge.svg)](https://github.com/lilabrooks/compact-theme/actions/workflows/tests.yml)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
+[![W3C validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F)](https://validator.w3.org/nu/?doc=https%3A%2F%2Flilabrooks.github.io%2Fcompact-theme%2F)
 
 Compact Theme is a portable static website theme built around IBM Plex Sans and IBM Plex Mono. It includes light and dark palettes, compact editorial layouts, responsive navigation, readable code blocks, and automatic copy buttons.
 
@@ -112,7 +113,9 @@ The default content shell grows from 1180px to 1360px on wide screens. Override 
 
 ## Preview
 
-Serve this directory with any static file server and open the site root or `index.html`.
+Open the [live GitHub Pages showcase](https://lilabrooks.github.io/compact-theme/) to review the complete component and behavior reference.
+
+For local review, serve this directory with any static file server and open the site root or `index.html`.
 
 ## Tests
 
