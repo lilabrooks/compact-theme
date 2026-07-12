@@ -116,7 +116,7 @@ Serve this directory with any static file server and open the site root or `inde
 
 ## Tests
 
-The published theme has no runtime dependencies. Development tests use Playwright to check Chromium, Firefox, and WebKit behavior, responsive layouts, theme persistence, code copying, local assets, and visual baselines.
+The published theme has no runtime dependencies. Development tests use Playwright and Axe to check Chromium, Firefox, and WebKit behavior, responsive layouts, theme persistence, code copying, local assets, accessibility rules, and visual baselines.
 
 Install the development dependencies and browser binaries once:
 
@@ -147,6 +147,12 @@ Pushes to `main` run the complete test suite, build an allowlisted `_site` artif
 The public artifact contains only the theme page, stylesheet, script, documentation, licences, and bundled fonts. Development dependencies, tests, screenshots, package metadata, and workflow files remain outside the deployed site.
 
 In the repository's Pages settings, select **GitHub Actions** as the publishing source.
+
+## Releases
+
+Semantic-version tags in the form `vMAJOR.MINOR.PATCH` trigger the release workflow. It runs the complete test suite, builds the allowlisted public distribution, creates a ZIP archive and SHA-256 checksum, and publishes both files to the matching GitHub release.
+
+The workflow can also be run manually for an existing semantic-version tag. Re-running it replaces the generated ZIP and checksum without changing the tagged source.
 
 ## Licence and attribution
 

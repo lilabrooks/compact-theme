@@ -1,23 +1,10 @@
 import { existsSync, lstatSync, readdirSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { publicFiles } from "./public-files.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const output = resolve(root, "_site");
-
-const expectedFiles = [
-  "COPYRIGHT.txt",
-  "LICENSE",
-  "README.md",
-  "compact-theme.css",
-  "compact-theme.js",
-  "fonts/IBMPlexMono-Regular.woff2",
-  "fonts/IBMPlexMono-SemiBold.woff2",
-  "fonts/IBMPlexSans-Regular.woff2",
-  "fonts/IBMPlexSans-SemiBold.woff2",
-  "fonts/LICENSE.txt",
-  "index.html"
-];
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -34,6 +21,7 @@ function listFiles(directory) {
 assert(existsSync(output), "Pages artifact has not been built");
 
 const actualFiles = listFiles(output).sort();
+const expectedFiles = [...publicFiles].sort();
 assert(JSON.stringify(actualFiles) === JSON.stringify(expectedFiles), `Unexpected Pages artifact contents:\n${actualFiles.join("\n")}`);
 
 for (const relativePath of actualFiles) {

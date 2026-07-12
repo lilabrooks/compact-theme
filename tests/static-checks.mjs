@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { publicFiles } from "./public-files.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -8,20 +9,7 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const requiredFiles = [
-  ".nojekyll",
-  "COPYRIGHT.txt",
-  "LICENSE",
-  "README.md",
-  "compact-theme.css",
-  "compact-theme.js",
-  "fonts/IBMPlexMono-Regular.woff2",
-  "fonts/IBMPlexMono-SemiBold.woff2",
-  "fonts/IBMPlexSans-Regular.woff2",
-  "fonts/IBMPlexSans-SemiBold.woff2",
-  "fonts/LICENSE.txt",
-  "index.html"
-];
+const requiredFiles = [".nojekyll", ...publicFiles];
 
 for (const relativePath of requiredFiles) {
   assert(existsSync(resolve(root, relativePath)), `Missing required file: ${relativePath}`);
@@ -35,6 +23,10 @@ const css = readFileSync(resolve(root, "compact-theme.css"), "utf8");
 const javascript = readFileSync(resolve(root, "compact-theme.js"), "utf8");
 const license = readFileSync(resolve(root, "LICENSE"), "utf8");
 const fontLicense = readFileSync(resolve(root, "fonts/LICENSE.txt"), "utf8");
+const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
+const workflow = readFileSync(resolve(root, ".github/workflows/tests.yml"), "utf8");
+const releaseWorkflow = readFileSync(resolve(root, ".github/workflows/release.yml"), "utf8");
+const snapshotScript = readFileSync(resolve(root, "tests/update-linux-snapshots.sh"), "utf8");
 
 assert(/^<!doctype html>/i.test(html), "index.html must start with an HTML5 doctype");
 assert(/<html\s+lang="en"/i.test(html), "index.html must declare its language");
@@ -71,5 +63,22 @@ assert(javascript.includes('"use strict"'), "Theme JavaScript must use strict mo
 assert(license.includes("BSD 2-Clause License"), "Software licence identifier is missing");
 assert(license.includes("Copyright (c) 2026 Lila Brooks"), "Software copyright notice is missing");
 assert(fontLicense.includes("SIL OPEN FONT LICENSE Version 1.1"), "IBM font licence is missing");
+
+const playwrightVersion = packageJson.devDependencies?.["@playwright/test"];
+assert(/^\d+\.\d+\.\d+$/.test(playwrightVersion), "Playwright must use an exact semantic version");
+
+for (const [name, source] of [["CI workflow", workflow], ["release workflow", releaseWorkflow], ["Linux snapshot script", snapshotScript]]) {
+  const imageVersion = source.match(/mcr\.microsoft\.com\/playwright:v(\d+\.\d+\.\d+)-noble/)?.[1];
+  assert(imageVersion, `${name} must pin a Playwright Noble image`);
+  assert(imageVersion === playwrightVersion, `${name} uses Playwright ${imageVersion}; package.json uses ${playwrightVersion}`);
+}
+
+for (const [name, source] of [["CI workflow", workflow], ["release workflow", releaseWorkflow]]) {
+  const actionReferences = [...source.matchAll(/uses:\s+[^@\s]+@([^\s#]+)/g)].map((match) => match[1]);
+  assert(actionReferences.length > 0, `${name} must use at least one action`);
+  for (const reference of actionReferences) {
+    assert(/^[a-f0-9]{40}$/.test(reference), `${name} contains a mutable action reference: ${reference}`);
+  }
+}
 
 console.log(`Static checks passed (${requiredFiles.length} required files, ${localReferences.length} local references).`);

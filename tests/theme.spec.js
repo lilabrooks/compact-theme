@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const viewports = [
@@ -62,6 +63,14 @@ test("uses semantic landmarks and valid fragment targets", async ({ page }) => {
   });
 
   expect(integrity).toEqual({ duplicateIds: [], missingTargets: [], buttonsWithoutType: 0 });
+});
+
+test("has no detectable accessibility violations", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
 });
 
 test("switches theme and persists the selection", async ({ page }) => {
